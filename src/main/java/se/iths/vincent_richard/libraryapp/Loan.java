@@ -13,6 +13,11 @@ public class Loan {
         loanDate = LocalDateTime.now();
     }
 
+    public Book getBook()
+    {
+        return book;
+    }
+
     @Override
     public String toString() {
         return "Låntagare: " + borrower.getName() + "\nBok: " + book.getTitle() + "\nLånedatum: " + loanDate;

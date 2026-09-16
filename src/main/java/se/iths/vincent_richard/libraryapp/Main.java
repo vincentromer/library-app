@@ -7,8 +7,10 @@ public class Main {
 
     private static final String MENU =
             """
-                    1. List all books
-                    2. Quit
+                    1. List All Books
+                    2. Loan Book
+                    3. List All Loans
+                    4. Quit
                     Choice:\s""";
 
     static List<Borrower> borrowers = new ArrayList<>();
@@ -36,16 +38,18 @@ public class Main {
                 break;
             }
         }
+        boolean running = false;
         if (currentBorrower != null)
         {
             IO.println("logged in " + currentBorrower);
+            running = true;
         }
         else
         {
             IO.println("Wrong username or password!");
         }
 
-        boolean running = true;
+
         while(running)
         {
             String input = IO.readln(MENU);
@@ -58,7 +62,58 @@ public class Main {
                         IO.println(book);
                     }
                     break;
+                case "2":
+                {
+                    String isbn = IO.readln("ISBN: ");
+
+                    if (isbn.isBlank()) {
+                        IO.println("TRY AGAIN!!!");
+                        break;
+                    }
+
+                    // 1. Find the book
+                    Book foundBook = null;
+                    for (Book book : books) {
+                        if (book.getIsbn().equals(isbn)) {
+                            foundBook = book;
+                            break;
+                        }
+                    }
+
+                    if (foundBook == null) {
+                        IO.println("Failed to find!!!");
+                        break;
+                    }
+
+                    // 2. Check if already loaned
+                    boolean alreadyLoaned = false;
+                    for (Loan loan : loans) {
+                        if (loan.getBook().getIsbn().equals(isbn)) {
+                            alreadyLoaned = true;
+                            break;
+                        }
+                    }
+
+                    if (alreadyLoaned) {
+                        IO.println("Book already loaned");
+                        break;
+                    }
+
+                    // 3. Create loan
+                    Loan newLoan = new Loan(currentBorrower, foundBook);
+                    loans.add(newLoan);
+                    IO.println("Loaned book");
+                    break;
+                }
+
                 case "3":
+                    for(Loan loan : loans)
+                    {
+                        IO.println(loan);
+                    }
+                    break;
+                case "4":
+                    IO.println("quiting");
                     running = false;
                     break;
             }
