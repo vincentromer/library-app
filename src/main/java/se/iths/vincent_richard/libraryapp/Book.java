@@ -43,6 +43,6 @@ public class Book
     @Override
     public String toString()
     {
-        return String.format("%s written by: %s\nISBN: %s", title, author.toString(), isbn);
+        return String.format("\"%s\" skriven av: %s\nISBN: %s", title, author.toString(), isbn);
     }
 }
