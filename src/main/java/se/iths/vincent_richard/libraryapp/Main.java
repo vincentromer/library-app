@@ -8,5 +8,10 @@ public class Main {
         Book book = new Book(bob, "Tio hästar", "978-1-78280-808-4");
         IO.println(book.toString());
 
+        Borrower borrower = new Borrower("Erik", "erik", "password123");
+        IO.println(borrower.toString());
+
+        Loan loan = new Loan(borrower, book);
+        IO.println(loan.toString());
     }
 }
